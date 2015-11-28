@@ -1,0 +1,153 @@
+<!-- плохо пересекаются друг с другом -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>for one square</title>
+	<script type="text/javascript">
+	var speed;
+	var coords;
+
+	var max_h = window.innerHeight;
+	var max_w = window.innerWidth;
+
+	var coords_list = [];
+	var speed_list = [];
+	var j = 0;
+
+	function getRandomInt(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+
+	function get_direct(){
+			var els = [-1, 0, 1];
+			var s_w = getRandomInt(0, 2);
+			var s_h = getRandomInt(0, 2);
+			if (s_w == 1 && s_h == 1) 
+				s_w = 2;
+			speed = [els[s_h], els[s_w]];
+	}
+	
+	function isCross() {
+	    var tl = [coords[0], coords[1]];
+	    var tr = [coords[0], coords[1] + coords[3]];
+	    var fl = [coords[0] + coords[2]];
+	    var fr = [coords[0] + coords[2], coords[1] + coords[3]];
+	    for (var i in coords_list) {
+	        var curr_coord = coords_list[i];
+
+	        if (coords[1] + speed[0] >= curr_coord[1] && coords[0] + speed[1] >= curr_coord[0] && coords[0] + coords[2] + speed[1] <= curr_coord[0] + curr_coord[2] && coords[1] + speed[0] + coords[3] <= curr_coord[1] + curr_coord[3]) {
+	            alert("here");
+	            speed[0] *= -1;
+	        }
+
+
+	        if (coords[0] + speed[1] <= curr_coord[0] || coords[0] + speed[1] + coords[2] >= curr_coord[0] + curr_coord[2])
+	            speed[1] *= -1;
+	    }
+	    return false;
+	}
+
+	function get_square(id) {
+		var min_size = 50;
+		var max_size = 200;
+
+		var colors = ["red", "blue", "#F7FE2E", "maroon",  "#00FFBF", "#CC2EFA", "#FA58AC", "pink", "orange", "green", "grey", "brown"];
+		var colors_count = colors.length - 1;
+
+		var top = Math.floor(Math.random() * (max_h - max_size - min_size + 1)) + min_size;
+		var left = Math.floor(Math.random() * (max_w - max_size - min_size + 1)) + min_size;
+
+		curr_height = Math.floor(Math.random() * (max_size - min_size + 1)) + min_size;
+		curr_width = Math.floor(Math.random() * (max_size - min_size + 1)) + min_size;
+
+		var color_num = Math.floor(Math.random() * (colors_count + 1));
+
+		var div = document.createElement('div');
+
+		get_direct();
+		coords = [top, left, curr_height, curr_width];
+
+		div.id = id + '';
+		div.style.border = "1px solid";
+		div.style.position = "absolute";
+		div.style.top = top + "px";
+		div.style.left = left + "px";
+		div.style.height = curr_height + "px";
+		div.style.width = curr_width + "px";
+		div.style.background = colors[color_num];
+		
+		document.body.appendChild(div);
+
+				
+	}
+
+	function update_div(id) {
+		var div = document.getElementById(id);
+		div.style.top = coords[0] + "px";
+		div.style.left = coords[1] + 'px';
+		div.style.height = coords[2] + 'px';
+		div.style.width = coords[3] + 'px';
+		document.body.appendChild(div);
+	}
+
+	function changeDirIfCross() {
+	    var cross_count = 0;
+	        // if (isCross())
+	            // cross_count++;
+	        if (cross_count > 1) {
+	            //alert("here");
+	            speed[0] *= -1;
+	            speed[1] *= -1;
+	            return;
+    	    }
+	}
+
+	function move(id) {
+		max_h = window.innerHeight - 2;
+		max_w = window.innerWidth - 2;
+
+		if (coords[1] + speed[0] < 0 || coords[1] + speed[0] + coords[3] > max_w)
+			speed[0] *= -1;
+		else
+		    coords[1] += speed[0];
+
+
+		if (coords[0] + speed[1] < 0 || coords[0] + speed[1] + coords[2] > max_h)
+		    speed[1] *= -1;
+		else
+		    coords[0] += speed[1];
+        changeDirIfCross()
+		update_div(id + '');
+	}
+
+	function get_sqrs() {
+		var count = getRandomInt(4, 12);
+	    //var count = 3;
+		for (var i = 0; i < count; i++) {
+			get_square(i);
+			coords_list[j] = coords;
+			speed_list[j++] = speed;
+		}
+	}
+
+	function moves() {
+		for (var i = 0; i < j; i++) {
+			coords = coords_list[i];
+			speed = speed_list[i];
+			move(i);
+		}
+	}
+
+	window.onload = function install(){
+		get_sqrs();
+		setInterval(moves, 10);
+		//move("0");
+	}
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>

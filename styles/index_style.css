@@ -1,0 +1,22 @@
+.image {
+	width: 30%;
+	/*padding-right: ;*/
+	float: left;
+}
+
+.text {
+	float: left;
+	clear: right !important;
+	margin-left: 3%;
+	font-size: 20px;
+	color: #6E6E6E;
+}
+
+.top {
+	padding-top: 20% !important;
+}
+
+.left_img {
+	margin: 0 3% !important;
+	height: 100%;
+}

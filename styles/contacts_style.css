@@ -1,0 +1,50 @@
+#padding {
+	padding-left: 25pt;
+}
+#header {
+	/*margin: 7% auto;*/
+	margin-left: 40%;
+	padding-top: 3%;
+	font-size: 20px;
+	line-height: 0.5;
+}
+
+
+.col{
+    border: 1px solid #D8D8D8;
+    padding: 0.025%;
+    background-color: white;
+    width: 100%;
+}
+
+.text {
+	float: left;
+	clear: right !important;
+	margin-left: 10%;
+}
+
+@media (min-width: 768px) {
+	.col {
+		position: relative;
+    	float: right;
+	}
+	.text {
+		
+	}
+	#header {
+		margin-left: 40%;
+	}
+}
+
+.left_img {
+	margin: 0 3%;
+	height: 100%;
+	/*width: 30%;*/
+	padding: 0;
+}
+
+.image {
+	width: 30%;
+	/*padding-right: ;*/
+	float: left;
+}

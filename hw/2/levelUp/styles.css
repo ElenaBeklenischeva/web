@@ -1,0 +1,96 @@
+.hideS{
+	display: none;
+}
+
+table {
+    border-collapse: collapse;  Убираем двойные линии между ячейками 
+    /*border-color: #ffffff;*/
+    /*border: 0px;*/
+    /*padding: 0px;*/
+	}
+
+tbody tr:hover{
+	background: #f9f9f0;
+}
+
+.text {
+	font-size: 90%;
+	font-family: Arial;
+	color: #220202;
+}
+
+.textH {
+	font-family: Arial;
+	color: #696969;
+	font-size: 7pt;
+	border: 1pt;
+	border-color: black;
+}
+
+.s_button {
+	background: #04B404;
+	color: white;
+	border-radius: 7px;
+	border-color: white;
+	text-align: center;
+	font-family: Arial;
+	height: 28pt;
+	width: 70pt;
+	margin-left: 24%;
+	margin-top: 3pt;
+}
+.r_button {
+	background: linear-gradient(to top, #F2F2F2, white);
+	color: black;
+	border-radius: 7px;
+	border-color: #d8d8d8;
+	text-align: center;
+	font-family: Arial;
+	height: 28pt;
+	width: 70pt;
+	margin-top: 3pt;
+}
+/*.pic {
+        float: left;
+        height: 9px;
+        margin: 10px;
+        position: relative;
+        width: 9px;
+}
+.pic:after {
+        content: ' ';
+        background-color: #000;
+        height: 100%;
+        left: 0;
+        opacity: 0.0;
+        position: absolute;
+        top: 0;
+        -webkit-transition: opacity 0.3s;
+        -moz-transition: opacity 0.3s;
+        -o-transition: opacity 0.3s;
+        -ms-transition: opacity 0.3s;
+        transition: opacity 0.3s;
+        width: 100%;
+} */
+
+/*.pic {
+	width: 9px;
+	display:none;
+}
+
+.pic:hover {
+	display: inline;
+	background: url("images/flag1.png")
+}*/
+
+TR.even {
+	background: #f4f4f4;
+}
+
+.cross {
+	cursor: pointer;
+}
+
+.m_table {
+	margin-left: 24%;
+}

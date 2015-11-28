@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>List</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script src="scripts.js"></script>
+</head>
+<body>
+	<table border="0" class="m_table">
+		<tr class="textH">
+			<td>
+				<input type="checkbox" class="check" value="0" id="head_box0" name="blockbox0" onchange=checkCheckbox(0)>	
+			</td>
+			<td><b>Сотрудники</b></td>
+			<td></td>
+			<td align="center" width="13%"><b>Начислено</b></td>
+			<td align="center" width="13%"><b>Удержано</b></td>
+			<td align="center" width="13%"><b>Выплачено</b></td>
+			<td align="center" width="13%"><b>К выплате</b></td>
+			<td align="right" width="10%"><b>Взносы</b></td>
+		</tr>
+		
+		<tr class="even cross">
+			<td><input type="checkbox" class="check" value="1" id="head_box1" name="blockbox1" onchange=checkCheckbox(1)></td>
+			<td class="text"><strong>Бухгалтерия</strong> <a href="javascript:hide(1)" id="href1">&#9654; 1 сотрудник</a></td>
+			<td width="10px"></td>
+			<td class="text" align="center">1</td>
+			<td class="text" align="center">2</td>
+			<td class="text" align="center">3</td>
+			<td class="text" align="center">4</td>
+			<td class="text" align="right">5</td>
+		</tr>
+		<tr class="hideS cross" id="chapter1" name="str1">
+			<td><input type="checkbox" class="check" value="2" name="blockbox1" id="cell_1" onchange="changeCheckBox(1, 'cell_1')"></td>
+			<td class="text">Иванов Петр Иванович</td>
+			<td><img class="img pic" src="images/flag1.png" alt="flag" onclick=changeFlag("flag1") id="flag1"></td>
+			<td class="text" align="center">1</td>
+			<td class="text" align="center">2</td>
+			<td class="text" align="center">3</td>
+			<td class="text" align="center">4</td>
+			<td class="text" align="right">5</td>
+		</tr>
+		<tr class="hideS cross" id="chapter1" name="str1">
+			<td><input type="checkbox" class="check" value="2" name="blockbox1" id="cell_2" onchange="changeCheckBox(1, 'cell_2')"></td>
+			<td class="text">Петров Петр Иванович</td>
+			<td><img class="img pic" src="images/flag1.png" alt="flag" onclick=changeFlag("flag2") id="flag2"></td>
+			<td class="text" align="center">1</td>
+			<td class="text" align="center">2</td>
+			<td class="text" align="center">3</td>
+			<td class="text" align="center">4</td>
+			<td class="text" align="right">5</td>
+		</tr>
+		<tr class="even cross">
+			<td><input type="checkbox" class="check" value="1" id="head_box2" name="blockbox2" onchange=checkCheckbox(2)></td>
+			<td class="text"><strong>Служба доставки</strong> <a href="javascript:hide(2)" id="href2">&#9654; 3 сотрудника</a></td>
+			<td width="10px"></td>
+			<td class="text" align="center">1</td>
+			<td class="text" align="center">2</td>
+			<td class="text" align="center">3</td>
+			<td class="text" align="center">4</td>
+			<td class="text" align="right">5</td>
+		</tr>
+		<tr class="hideS cross" id="chapter2" name="str2">
+			<td><input type="checkbox" class="check" value="2" name="blockbox2" id="cell_3" onchange="changeCheckBox(2, 'cell_3')"></td>
+			<td class="text">Иванов Петр Иванович</td>
+			<td><img class="img pic" src="images/flag1.png" alt="flag" onclick=changeFlag("flag3") id="flag3"></td>
+			<td class="text" align="center">1</td>
+			<td class="text" align="center">2</td>
+			<td class="text" align="center">3</td>
+			<td class="text" align="center">4</td>
+			<td class="text" align="right">5</td>
+		</tr>
+		<tr class="hideS cross" id="chapter2" name="str2">
+			<td><input type="checkbox" class="check" value="2" name="blockbox2" id="cell_4" onchange="changeCheckBox(2, 'cell_4')"></td>
+			<td class="text">Петров Петр Иванович</td>
+			<td ><img class="img" src="images/flag1.png" alt="flag" onclick=changeFlag("flag4") id="flag4"></td>
+			<td class="text" align="center">1</td>
+			<td class="text" align="center">2</td>
+			<td class="text" align="center">3</td>
+			<td class="text" align="center">4</td>
+			<td class="text" align="right">5</td>
+		</tr>
+	</table>
+	<button class="s_button">Сохранить</button>
+	<button class="r_button">Отмена</button>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+$mq-responsive: false;
+@import "mq";
+.list {
+	@include mq($from: mobile) {
+		width: 100%;
+	}
+
+	@include mq($from:tablet) {
+		width: 25%;
+	}
+}
