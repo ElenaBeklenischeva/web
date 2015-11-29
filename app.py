@@ -1,4 +1,4 @@
-from bottle import route, static_file, redirect, run, load_app, Bottle
+from bottle import route, static_file, redirect, run, Bottle
 
 app = application = Bottle()
 
