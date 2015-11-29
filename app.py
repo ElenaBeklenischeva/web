@@ -72,8 +72,11 @@ def hw_files(filename):
 
 
 if __name__ == "__main__":
-    run(app=StripPathMiddleware(app),
-        host='0.0.0.0',
-        port=4000,
-        reloader=True)
+    run(app=StripPathMiddleware(app))
+else:
+    import bottle
+    app = application = bottle.default_app()    
+        # host='0.0.0.0',
+        # port=40000,
+        # reloader=True)
     # run(debug=True, port=4000, reloader=True)
