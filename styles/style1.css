@@ -78,3 +78,38 @@ ul {
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	background-color: #00FFBF;
 }
+
+.counter {
+	border-radius: 0 10px 10px 0;
+	width: 300px;
+	background-color: #989898;
+	color: #fff;
+	position: absolute;
+	height: 185px;
+	left: -280px;
+	bottom: 100px;
+	border-right: 20px solid #00FFBF;
+	/*padding: 10px;*/
+	transition: 0.5s;
+	font-size: 16px;
+}
+
+.counter:after {
+	content: 'Счетчик';
+	color: #000;
+	position: absolute;
+	bottom: 40px;
+	right: -38px;
+	transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+}
+
+.counter:hover {
+	left: 0;
+}
+
+.text_counter {
+	color:  white;
+	font-size: small;
+	line-height: 1.0em;
+}

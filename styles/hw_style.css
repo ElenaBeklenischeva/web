@@ -1,5 +1,18 @@
-/*@media (max-width: 767px) {*/
-	.paddingList {
-		margin-left: 3%;
-	}
-/*}*/
+.paddingList {
+	margin-left: 3%;
+}
+
+#comment {
+	width: 90%;
+	resize: none;
+	font-size: small;
+	outline: thick;
+}
+
+h3 {
+	color: #6E6E6E;
+}
+
+p {
+    word-wrap: break-word;
+}

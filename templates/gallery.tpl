@@ -1,48 +1,17 @@
+%setdefault('all', '0')
+%setdefault('today', '0')
+%setdefault('last_visit', '')
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Галерея</title>
-	<meta charset="UTF-8">
-	<link rel="shortcut icon" href="images/f1.ico" type="image/x-icon">
-	<link rel="stylesheet" type="text/css" href="styles/style1.css">
+	%include templates/styles title='Галерея'
 	<link rel="stylesheet" type="text/css" href="styles/galery_style.css">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-
-	
 	<script  type="text/javascript" href="js/ie.js"></script>
-
 	<script type="text/javascript" src='js/gallery.js'></script>
 	<script  type="text/javascript" src="js/gallery_buttons.js"></script>
 </head>
 <body onhelp="return false" name="body">
-	<div class="col-xs-offset-1 col-xs-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 header">
-	<div class="navbar" id="banner">
-	<!-- <div class="navbar navbar-static-top" id="banner" role="banner"> -->
-		<!-- <div class="col-md-offset-2 col-md-8 header_text"> -->
-		<ul>
-			<li class="col-md-3 col-xs-12 list">
-				<a href='index.html'>
-					<h4 class="navigate">ГЛАВНАЯ</h4>
-				</a>
-			</li>
-            <li class="col-md-3 col-xs-12 list">
-				<a href='galery.html'>
-					<h4 class="navigate">ГАЛЕРЕЯ</h4>
-				</a>
-			</li>
-			<li class="col-md-3 col-xs-12 list">
-				<a href='hw.html'>
-					<h4 class="navigate">ОТЗЫВЫ</h4>
-				</a>
-			</li>
-			<li class="col-md-3 col-xs-12 list">
-				<a href='contacts.html'>
-					<h4 class="navigate">КОНТАКТЫ</h4>
-				</a>
-			</li>
-		</ul>
-		</div>
-	</div>
+	%include templates/head
 	<div class='col-xs-offset-1 col-xs-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 background'>
 		<div id='previewsContainer'>
 			<div class="load">
@@ -77,10 +46,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="stub"></div>
-	<div id="footer" class="col-xs-12">
-			&copy; Подвал
-	</div>
+
+	%include templates/bottom
 	<div id='lightBox'>
 		<div class="load" id="big">
 		<a href='#' id='imageCloser' onclick='return false'>X</a>

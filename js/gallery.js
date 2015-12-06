@@ -134,7 +134,7 @@ document.onclick = function click(e) {
 	className = target.parentElement.className;
 	id = parent.id;
 
-	if(target.id == 'imageCloser' || target.id == 'lightBox') {
+	if(target.id == 'imageCloser' || target.id == 'lightBox' || target.id == 'big') {
 		display_none();
 
 	} else
