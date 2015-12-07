@@ -50,37 +50,55 @@
                 %        i += 9
                 %    elif i + 4 <= length and len(stack) > 0 and i - stack[-1][1] + 10 > 0:
                 %        if stack[-1][0] == s_b and data[i:i + 4] == e_b:
-                %            tags.append((stack[-1][1], i, s_b))
+                %            c = data[stack[-1][1] + 3:i].count('<')
+                %            substr = data[stack[-1][1] + 3:i].replace('<', '&lt;')
+                %            data = data[:stack[-1][1] + 3] + substr + data[i:]
+                %            substr = data[stack[-1][1] + 3:i + c*3].replace('>', '&gt;')
+                %            data = data[:stack[-1][1] + 3] + substr + data[i + c*3:]
+                %            tags.append((stack[-1][1], i + c*6, s_b))
                 %            j.append(stack[-1][1])
                 %            j.append(stack[-1][1] + 3)
                 %            j.append(i)
-                %            j.append(i + 4)
+                %            j.append(i + 4 + c*6)
+                %            i += 4 + c*6
                 %            stack.pop(-1)
-                %            i += 4
                 %        elif stack[-1][0] == s_i and data[i:i + 4] == e_i:
+                %            c = data[stack[-1][1] + 3:i].count('<')
+                %            substr = data[stack[-1][1] + 3:i].replace('<', '&lt;')
+                %            data = data[:stack[-1][1] + 3] + substr + data[i:]
+                %            substr = data[stack[-1][1] + 3:i + c*3].replace('>', '&gt;')
+                %            data = data[:stack[-1][1] + 3] + substr + data[i + c*3:]
                 %            tags.append((stack[-1][1], i, s_i))
                 %            j.append(stack[-1][1])
                 %            j.append(stack[-1][1] + 3)
                 %            j.append(i)
-                %            j.append(i + 4)
+                %            j.append(i + 4 + c*6)
+                %            i += 4 + c*6
                 %            stack.pop(-1)
-                %            i += 4
                 %        else:
                 %            i += 1
                          %end
                 %    elif i + 2 <= length and len(stack) > 0:
                 %        if stack[-1][0] == img_s1 and data[i:i + 2] == img_e1:
-                %            tags.append((stack[-1][1], i, img_s1))
-                %            j.append(stack[-1][1])
-                %            j.append(i + 4)
+                %            if "'" in data[stack[-1][1] + 10:i] or '"' in data[stack[-1][1] + 10:i]:
+                %                i += 2
+                %            else:
+                %                tags.append((stack[-1][1], i, img_s1))
+                %                j.append(stack[-1][1])
+                %                j.append(i + 4)
+                %                i += 2
+                %            end
                 %            stack.pop(-1)
-                %            i += 2
                 %        elif stack[-1][0] == img_s2 and data[i:i + 2] == img_e2:
-                %            tags.append((stack[-1][1], i, img_s2))
-                %            j.append(stack[-1][1])
-                %            j.append(i + 4)
+                %            if "'" in data[stack[-1][1] + 10:i] or '"' in data[stack[-1][1] + 10:i]:
+                %                i += 2
+                %            else:
+                %                tags.append((stack[-1][1], i, img_s1))
+                %                j.append(stack[-1][1])
+                %                j.append(i + 4)
+                %                i += 2
+                %            end
                 %            stack.pop(-1)
-                %            i += 2
                 %        else:
                 %            i += 1
                          %end
