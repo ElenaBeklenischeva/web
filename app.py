@@ -224,7 +224,6 @@ def get_comment():
 if __name__ == "__main__":
     print('main')
     run(
-        app=StripPathMiddleware(app),
         host='0.0.0.0',
         port=40000)
         # reloader=True)
