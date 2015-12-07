@@ -223,14 +223,14 @@ def get_comment():
 
 if __name__ == "__main__":
     print('main')
-    run(
+    run(app=StripPathMiddleware(app),
         host='0.0.0.0',
         port=40000)
         # reloader=True)
     # conn.close()
-else:
-    import bottle
+#else:
+ #   import bottle
 
-    app = application = bottle.default_app()
-    run(host='0.0.0.0', port=40000, reloader=True)
+  #  app = application = bottle.default_app()
+   # run(host='0.0.0.0', port=40000, reloader=True)
 
