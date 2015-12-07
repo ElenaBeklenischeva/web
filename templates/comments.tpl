@@ -68,7 +68,7 @@
                 %            data = data[:stack[-1][1] + 3] + substr + data[i:]
                 %            substr = data[stack[-1][1] + 3:i + c*3].replace('>', '&gt;')
                 %            data = data[:stack[-1][1] + 3] + substr + data[i + c*3:]
-                %            tags.append((stack[-1][1], i, s_i))
+                %            tags.append((stack[-1][1], i + c*6, s_i))
                 %            j.append(stack[-1][1])
                 %            j.append(stack[-1][1] + 3)
                 %            j.append(i)
