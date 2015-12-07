@@ -24,7 +24,7 @@ window.onload = function ready(e) {
 	if(!curr_cookie)
 		curr_cookie = get_cookie('start');
 	if (curr_cookie) {
-		//console.log(curr_cookie);
+		// console.log(curr_cookie);
 		if(Array.prototype.indexOf)
 			curr_image_position = images_src.indexOf(curr_cookie);
 		else {
@@ -65,7 +65,7 @@ function set_cookie(name, value, path, expires) {
 
 function delete_cookie ( cookie_name )
 {
-	//console.log("delete_cookie");
+	// console.log("delete_cookie");
 	if(get_cookie(cookie_name)) {
 		set_cookie('bigImg', "");
 	}
@@ -73,7 +73,7 @@ function delete_cookie ( cookie_name )
 
 function get_cookie ( cookie_name )
 {
-	//console.log('get_cookie');
+	// console.log('get_cookie');
 	var results = document.cookie.match ( '(^|;) ?' + cookie_name + '=([^;]*)(;|$)' );
 
 	if ( results )
