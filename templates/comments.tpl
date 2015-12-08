@@ -57,9 +57,7 @@
                 %            data = data[:stack[-1][1] + 3] + substr + data[i + c*3:]
                 %            tags.append((stack[-1][1], i + c*6, s_b))
                 %            j.append(stack[-1][1])
-                %            j.append(stack[-1][1] + 3)
-                %            j.append(i)
-                %            j.append(i + 4 + c*6)
+                %            j.append(i + c*6)
                 %            i += 4 + c*6
                 %            stack.pop(-1)
                 %        elif stack[-1][0] == s_i and data[i:i + 4] == e_i:
@@ -70,9 +68,7 @@
                 %            data = data[:stack[-1][1] + 3] + substr + data[i + c*3:]
                 %            tags.append((stack[-1][1], i + c*6, s_i))
                 %            j.append(stack[-1][1])
-                %            j.append(stack[-1][1] + 3)
-                %            j.append(i)
-                %            j.append(i + 4 + c*6)
+                %            j.append(i + c*6)
                 %            i += 4 + c*6
                 %            stack.pop(-1)
                 %        else:
@@ -107,27 +103,38 @@
                     %end
                 %end
                 %l = 0
+                %print(data)
+                %print(j)
                 %if len(stack) == 0:
                 %    i = 0
                 %    while i < length:
-                %       if i in j:
+                %       print('text')
+                %       if i not in j:
+                %           i += 1
+                %           print('not tag')
+                %       else:
+                %           print(i)
                 %           string = data[l:i]
+                %           print(data[l:i])
                 %           k = j.index(i)
+                %           print(k)
+                %           tag = data[i:j[k + 1]]
                 %           if data[i:i+4] == '<img':
-                %               tag = data[i:j[k + 1]]
-                %               i = j[k + 1] + 1
-                %               l = i
+                %               i = j[k + 1] + 2
                 %           else:
-                %               tag = data[i:j[k + 3]]
-                %               i = j[k + 3] + 1
-                %               l = i
-                            %end
+                %               i = j[k + 1] + 4
+                %           end
+                %           l = i
+                %           print(l)
+                %           print(i)
+                %           print("__________________")
                             {{string}}
                             {{!tag}}
-                        %end
-                        % i += 1
+                %       end
                      %end
                 %end
+                %print(data[l:])
+                %print("__________________")
                 {{data[l:]}}
             </p>
         %end
