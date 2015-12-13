@@ -1,3 +1,4 @@
+%import parsing
 %setdefault('all', '0')
 %setdefault('today', '0')
 %setdefault('last_visit', '')
@@ -24,120 +25,148 @@
         </form>
         <div>
         %for message in messages:
+            %#parsing.parsing_text(message[1])
             <p><b style="font-size:15px;color:black"><i>{{message[0]}}:</i></b>&nbsp;
+                %data = message[1]
                 %s_b = '<b>'
                 %e_b = '</b>'
                 %s_i = '<i>'
                 %e_i = '</i>'
                 %img_s1 = '<img src="'
-                %img_e1 = '">'
+                %img_e1 = '">;'
                 %img_s2 = "<img src='"
                 %img_e2 = "'>"
                 %start = [s_b, s_i]
-                %data = message[1]
+                %end = [e_b, e_i]
                 %length = len(data)
                 %stack = []
                 %tags = []
                 %i = 0
                 %j = []
-                %while i < length:
-                %    if i + 3 <= length and data[i:i + 3] in start:
-                %        stack.append((data[i:i + 3], i))
-                %        i += 3
-                %    elif i + 9 <= length and (data[i:i + 10] == img_s1 or
-                %                                     data[i:i + 10] == img_s2):
-                %        stack.append((data[i:i + 10], i))
-                %        i += 9
-                %    elif i + 4 <= length and len(stack) > 0 and i - stack[-1][1] + 10 > 0:
-                %        if stack[-1][0] == s_b and data[i:i + 4] == e_b:
-                %            c = data[stack[-1][1] + 3:i].count('<')
-                %            substr = data[stack[-1][1] + 3:i].replace('<', '&lt;')
-                %            data = data[:stack[-1][1] + 3] + substr + data[i:]
-                %            substr = data[stack[-1][1] + 3:i + c*3].replace('>', '&gt;')
-                %            data = data[:stack[-1][1] + 3] + substr + data[i + c*3:]
-                %            tags.append((stack[-1][1], i + c*6, s_b))
-                %            j.append(stack[-1][1])
-                %            j.append(i + c*6)
-                %            i += 4 + c*6
-                %            stack.pop(-1)
-                %        elif stack[-1][0] == s_i and data[i:i + 4] == e_i:
-                %            c = data[stack[-1][1] + 3:i].count('<')
-                %            substr = data[stack[-1][1] + 3:i].replace('<', '&lt;')
-                %            data = data[:stack[-1][1] + 3] + substr + data[i:]
-                %            substr = data[stack[-1][1] + 3:i + c*3].replace('>', '&gt;')
-                %            data = data[:stack[-1][1] + 3] + substr + data[i + c*3:]
-                %            tags.append((stack[-1][1], i + c*6, s_i))
-                %            j.append(stack[-1][1])
-                %            j.append(i + c*6)
-                %            i += 4 + c*6
-                %            stack.pop(-1)
-                %        else:
-                %            i += 1
-                         %end
-                %    elif i + 2 <= length and len(stack) > 0:
-                %        if stack[-1][0] == img_s1 and data[i:i + 2] == img_e1:
-                %            if "'" in data[stack[-1][1] + 10:i] or '"' in data[stack[-1][1] + 10:i]:
-                %                i += 2
-                %            else:
-                %                tags.append((stack[-1][1], i, img_s1))
-                %                j.append(stack[-1][1])
-                %                j.append(i + 4)
-                %                i += 2
-                %            end
-                %            stack.pop(-1)
-                %        elif stack[-1][0] == img_s2 and data[i:i + 2] == img_e2:
-                %            if "'" in data[stack[-1][1] + 10:i] or '"' in data[stack[-1][1] + 10:i]:
-                %                i += 2
-                %            else:
-                %                tags.append((stack[-1][1], i, img_s1))
-                %                j.append(stack[-1][1])
-                %                j.append(i + 4)
-                %                i += 2
-                %            end
-                %            stack.pop(-1)
-                %        else:
-                %            i += 1
-                         %end
-                %    else:
-                %        i += 1
-                    %end
-                %end
-                %l = 0
+                %# data = screening(data)
+                %data = parsing.clear_space(data)
                 %print(data)
-                %print(j)
-                %if len(stack) == 0:
-                %    i = 0
-                %    while i < length:
-                %       print('text')
-                %       if i not in j:
-                %           i += 1
-                %           print('not tag')
-                %       else:
-                %           print(i)
-                %           string = data[l:i]
-                %           print(data[l:i])
-                %           k = j.index(i)
-                %           print(k)
-                %           tag = data[i:j[k + 1]]
-                %           if data[i:i+4] == '<img':
-                %               i = j[k + 1] + 2
-                %           else:
-                %               i = j[k + 1] + 4
-                %           end
-                %           l = i
-                %           print(l)
-                %           print(i)
-                %           print("__________________")
-                            {{string}}
-                            {{!tag}}
-                %       end
-                     %end
+                %while i < length:
+                %   print("\n/__________/")
+                %   print(i)
+                %   print(data)
+                %   print(data[i:])
+                %   print("/__________/\n")
+                %   try:
+                %        i += data[i:].index("<")
+                %        if data[i:i + 3] in start:
+                %            stack.append((data[i:i + 3], i))
+                %            i += 3
+                %            print(data[i:])
+                %        elif i + 10 <= length and (data[i:i + 10] == img_s1 or
+                %                                           data[i:i + 10] == img_s2):
+                            %close_index_1 = parsing.get_index(data[i + 11:], '">')
+                            %close_index_2 = parsing.get_index(data[i + 11:], "'>")
+                            %open_index = parsing.get_index(data[i + 11:], "<")
+                            %bracket1 = parsing.get_index(data[i + 11:], '"')
+                            %bracket2 = parsing.get_index(data[i + 11:], "'")
+                            %if data[i:i + 10] == img_s1 and (
+                            %                close_index_1 < open_index or open_index < 0) and close_index_1 == bracket1:
+                                {{!data[i:close_index_1 + 13]}}
+                            %    i = close_index_1 + 13
+                            %elif data[i:i + 10] == img_s2 and (
+                            %                close_index_2 < open_index or open_index < 0) and close_index_2 == bracket2:
+                                {{!data[i:close_index_1 + 13]}}
+                            %    i = close_index_2 + 13
+                            %else:
+                            %    i += 1
+                            %end
+                        %print("?????")
+                        %print(data[i:i + 4])
+                        %print("?????")
+                        %elif i + 4 <= length and len(stack) > 0 and i - stack[-1][1] + 4 > 0 and data[i:i + 4] in end:
+                            %print("start tag")
+                            %if stack[-1][0] == s_b:
+                            %    print('start index - <b>')
+                            %    if data[i:i + 4] != e_b:
+                            %       if data[i:i + 4] != e_i:
+                            %           counter = data[stack[-1][1]: stack[-1][1] + 3].count("<")
+                            %           counter += data[stack[-1][1]: stack[-1][1] + 3].count(">")
+                            %           data = data[:stack[-1][1]] + parsing.screening(data[stack[-1][1]: stack[-1][1] + 3]) + data[stack[-1][1] + 3:]
+                            %           i += counter * 4
+                                        %if len(stack) < 2:
+                                            {{data[stack[-1][1]:i+4]}}
+                                        %end
+                            %       else:
+                                        %if len(stack) < 2:
+                                            {{data[stack[-1][1]:i+4]}}
+                                        %end
+                            %           i += 4
+                            %       end
+                            %    else:
+                            %       print('start index - <b> ant it"s end')
+                                    %i += 4
+                                    %if len(stack) < 2:
+                                        %print('start index - <b> print it')
+                                        {{!data[stack[-1][1]:i+4]}}
+                                    %end
+                                %end
+                            %    stack.pop()
+                            %elif stack[-1][0] == s_i:
+                            %    print('start index - <i>')
+                            %    if data[i:i + 4] != e_i:
+                            %       print('end index not is - <i>')
+                            %       if data[i:i + 4] != e_b:
+                            %           print('end index not is - <i>,  and not is <b>')
+                            %           counter = data[stack[-1][1]: stack[-1][1] + 3].count("<")
+                            %           counter += data[stack[-1][1]: stack[-1][1] + 3].count(">")
+                            %           data = data[:stack[-1][1]] + parsing.screening(data[stack[-1][1]: stack[-1][1] + 3]) + data[stack[-1][1] + 3:]
+                            %           i += counter *4
+                                        %if len(stack) < 2:
+                                            {{data[stack[-1][1]:i+4]}}
+                                        %end
+                            %       else:
+                            %           print('end index not is - <i>, it"s <b>')
+                                        %if len(stack) < 2:
+                                            {{data[stack[-1][1]:i+4]}}
+                                        %end
+                            %           i += 4
+                            %       end
+                            %    else:
+                            %       print('end index is - <i>')
+                            %       i += 4
+                                    %if len(stack) < 2:
+                                    %   print('end index is - <i> is last')
+                                        {{!data[stack[-1][1]:i+4]}}
+                                    %end
+                                %end
+                            %    stack.pop()
+                            %end
+                        %else:
+                        %    print(data)
+                        %    print(data[i:])
+                        %    index = parsing.get_index(data[i:], ">")
+                        %    print(index + i)
+                        %    if index == -1:
+                        %       data = parsing.screening(data[i:])
+                                {{data[i:]}}
+                        %       break
+                        %    else:
+                        %       counter = data[i:index + i].count("<")
+                        %       counter += data[i:index + i].count(">")
+                        %       data = data[:i] + parsing.screening(data[i:index + i + 1]) + data[index + i + 1:]
+                        %       i += index + 3 +counter*4
+                        %       print("___________")
+                        %       print(i)
+                        %       print(data)
+                        %       print(data[i:])
+                        %       print(stack)
+                        %    end
+                        %end
+                %   except ValueError:
+                        {{data[i:]}}
+                %       break
+                %   finally:
+                       % length = len(data)
+                %   end
+                    %end
+                    </p>
                 %end
-                %print(data[l:])
-                %print("__________________")
-                {{data[l:]}}
-            </p>
-        %end
         </div>
 	</div>
 	%include templates/bottom
