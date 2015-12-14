@@ -113,3 +113,7 @@ ul {
 	font-size: small;
 	line-height: 1.0em;
 }
+
+.head:hover {
+	background-color: #00f3b6;
+}

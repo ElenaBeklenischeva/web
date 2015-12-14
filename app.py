@@ -2,9 +2,7 @@ from bottle import route, \
     static_file, redirect, \
     run, Bottle, error, request, \
     post, get, template, response
-import sqlite3
-import datetime
-import time
+from db_methods import *
 
 
 app = application = Bottle()
@@ -20,16 +18,11 @@ conn.execute('CREATE TABLE if not exists users'
              'last_visit_time text)')
 conn.commit()
 
-conn_chat = sqlite3.connect('chat.db')
 
-conn_chat.execute('CREATE TABLE if not exists chat'
-                  '('
-                  'id integer primary key autoincrement,'
-                  'ip text,'
-                  'date integer,'
-                  'data text not null'
-                  ')')
-conn_chat.commit()
+conn_chat_index = create_table("chat_index")
+conn_chat_hw = create_table("chat_hw")
+conn_chat_gal = create_table("chat_gallery")
+conn_chat_con = create_table("chat_contacts")
 
 
 class StripPathMiddleware(object):
@@ -41,75 +34,59 @@ class StripPathMiddleware(object):
         return self.a(e, h)
 
 
-def add_message(ip, text):
-    text.replace("'", "\'")
-    conn_chat.execute("INSERT INTO chat(ip, date, data) VALUES(?, ?, ?)", (str(ip), str(time.time()), text))
-    conn_chat.commit()
-
-
-def get_messages():
-    return conn_chat.execute("select ip, data from chat order by id desc").fetchall()
-
-
 def update_ip(ip):
-    cur_count = (conn.execute("select users.visited_count from users where ip='" + ip + "'")).fetchone()
-    if cur_count is None:
-        c.execute(
-            "INSERT INTO users VALUES (?,?,?,?,?)", (str(ip), str(1), str(1), str(
-                datetime.date.today()), str(time.time())))
-        conn.commit()
-    else:
-        cur_time = (conn.execute("select users.last_visit_time from users where ip='" + ip + "'")).fetchone()[0]
-        cur_date = (conn.execute("select users.last_visit_date from users where ip='" + ip + "'")).fetchone()[0]
-        if abs(time.time() - float(cur_time)) > 3600 or cur_date != str(datetime.date.today()):
-            if cur_date != str(datetime.datetime.today()):
-                c.execute("update users set visited_count_today='" + '1' + "' where ip='" + ip + "'")
-            cur_count = int(cur_count[0]) + 1
-            cur_count_1 = (conn.execute("select visited_count_today from users where ip='" + ip + "'")).fetchone()[0] + 1
-
-            c.execute("update users set visited_count_today='" + str(cur_count_1) + "' where ip='" + ip + "'")
-            c.execute("update users set visited_count='" + str(cur_count) + "' where ip='" + ip + "'")
-            c.execute("update users set visited_count_today='" + str(cur_count) + "' where ip='" + ip + "'")
-            c.execute("update users set last_visit_date='" + str(datetime.date.today()) + "' where ip='" + ip + "'")
-            c.execute("update users set last_visit_time='" + str(time.time()) + "' where ip='" + ip + "'")
-            conn.commit()
-        else:
-            print("It's F5")
+    return update_ip_cur(ip, conn, c)
 
 
 def get_all_visiting():
-    res = conn.execute("select sum(visited_count) from users").fetchone()
-    if res:
-        return res[0]
-    else:
-        return
+    return get_all_visiting_curr(conn)
 
 
 def get_today_visiting():
-    cur_day = datetime.date.today()
-    res = (conn.execute("select sum(visited_count_today) from users where last_visit_date='" + str(cur_day) + "'")).fetchone()
-    if res:
-        return res[0]
-    else:
-        return
+    return get_today_visiting_curr(conn)
 
 
 def get_last_visit(ip):
-    res = conn.execute("select last_visit_date from users where ip='" + str(ip) + "'").fetchone()
-    if res:
-        return res[0]
-    else:
-        return
+    return get_last_visit_curr(ip, conn)
+
+
+def get_info(db, conn_db):
+    return get_info_curr(db, conn_db, conn, c)
 
 
 @app.route("/")
 def index():
-    browser = request.environ.get('HTTP_USER_AGENT')
-    ip = request.environ["REMOTE_ADDR"]
-    update_ip(ip)
+    browser, ip, messages = get_info('chat_index', conn_chat_index)
     print(ip)
     return template(
         'templates/index',
+        all=get_all_visiting(),
+        today=get_today_visiting(),
+        last_visit=get_last_visit(ip),
+        browser=browser,
+        messages=messages
+    )
+
+
+@app.route("/index.html")
+def index_r():
+    browser, ip, messages = get_info('chat_index', conn_chat_index)
+    return template(
+        'templates/index',
+        all=get_all_visiting(),
+        today=get_today_visiting(),
+        last_visit=get_last_visit(ip),
+        browser=browser,
+        messages=messages
+    )
+
+
+@app.route("/hw.html")
+def hw():
+    browser, ip, messages = get_info('chat_hw', conn_chat_hw)
+    return template(
+        'templates/hw',
+        messages=messages,
         all=get_all_visiting(),
         today=get_today_visiting(),
         last_visit=get_last_visit(ip),
@@ -117,58 +94,29 @@ def index():
     )
 
 
-@app.route("/index.html")
-def index_r():
-    ip = request.environ["REMOTE_ADDR"]
-    update_ip(ip)
-    cookie = ''
-    if request.get_cookie('resolution'):
-        cookie = request.get_cookie('resolution')
+@app.route("/galery.html")
+def gallery():
+    browser, ip, messages = get_info('chat_gallery', conn_chat_gal)
     return template(
-        'templates/index',
+        'templates/gallery',
         all=get_all_visiting(),
         today=get_today_visiting(),
         last_visit=get_last_visit(ip),
-        resolution=cookie
+        browser=browser,
+        messages=messages
     )
-
-
-@app.route("/hw.html")
-def hw():
-    ip = request.environ["REMOTE_ADDR"]
-    update_ip(ip)
-    messages_r = get_messages()
-    return template(
-        'templates/comments',
-        messages=messages_r,
-        all=get_all_visiting(),
-        today=get_today_visiting(),
-        last_visit=get_last_visit(ip)
-    )
-
-
-@app.route("/galery.html")
-def gallery():
-    ip = request.environ["REMOTE_ADDR"]
-    update_ip(ip)
-    return static_file('galery.html', './')
-    # return template(
-    #     'templates/gallery',
-    #     all=get_all_visiting(),
-    #     today=get_today_visiting(),
-    #     last_visit=get_last_visit(ip)
-    # )
 
 
 @app.route("/contacts.html")
 def contacts():
-    ip = request.environ["REMOTE_ADDR"]
-    update_ip(ip)
+    browser, ip, messages = get_info('chat_contacts', conn_chat_con)
     return template(
         'templates/contacts',
         all=get_all_visiting(),
         today=get_today_visiting(),
-        last_visit=get_last_visit(ip)
+        last_visit=get_last_visit(ip),
+        browser=browser,
+        messages=messages
     )
 
 
@@ -210,15 +158,39 @@ def error404(err):
     return static_file("index.html", './')
 
 
+@app.post('/')
+def get_comment_ind():
+    print('It"s post index')
+    add_new_message("chat_index", conn_chat_index)
+    redirect("/")
+
+
+@app.post('/')
+def get_comment_ind_n():
+    print('It"s post index')
+    add_new_message("chat_index", conn_chat_index)
+    redirect("/index.html")
+
+
 @app.post('/hw.html')
-def get_comment():
-    print('It"s post')
-    data = request.forms.get('answer_form')
-    print(data)
-    ip = request.environ["REMOTE_ADDR"]
-    if data.strip():
-        add_message(ip, data)
+def get_comment_hw():
+    print('It"s post hw')
+    add_new_message("chat_hw", conn_chat_hw)
     redirect("/hw.html")
+
+
+@app.post('/galery.html')
+def get_comment_gal():
+    print('It"s post gallery')
+    add_new_message("chat_gallery", conn_chat_gal)
+    redirect("/galery.html")
+
+
+@app.post('/contacts.html')
+def get_comment_cont():
+    print('It"s post contacts')
+    add_new_message("chat_contacts", conn_chat_con)
+    redirect("/contacts.html")
 
 
 if __name__ == "__main__":
@@ -226,12 +198,5 @@ if __name__ == "__main__":
     run(app=StripPathMiddleware(app),
         host='0.0.0.0',
         port=40000,
-        debug=True)
-        # reloader=True)
-    # conn.close()
-#else:
- #   import bottle
-
-  #  app = application = bottle.default_app()
-   # run(host='0.0.0.0', port=40000, reloader=True)
+        debug=True, reloader=True)
 

@@ -2,27 +2,27 @@
 <div class="navbar navbar-static-top" id="banner">
     <ul>
         <li class="col-xs-12
-                   col-md-3 list">
+                   col-md-3 list head">
             <a href='index.html'>
-                <h4 class="navigate">ГЛАВНАЯ</h4>
+                <h4 class="navigate head">ГЛАВНАЯ</h4>
             </a>
         </li>
         <li class="col-xs-12
-                   col-md-3 list">
+                   col-md-3 list head">
             <a href='galery.html'>
-                <h4 class="navigate">ГАЛЕРЕЯ</h4>
+                <h4 class="navigate head">ГАЛЕРЕЯ</h4>
             </a>
         </li>
         <li class="col-xs-12
-                   col-md-3 list ">
+                   col-md-3 list head">
             <a href='hw.html'>
-                <h4 class="navigate">ОТЗЫВЫ</h4>
+                <h4 class="navigate head">ОТЗЫВЫ</h4>
             </a>
         </li>
         <li class="col-xs-12
-                   col-md-3 list">
+                   col-md-3 list head">
             <a href='contacts.html'>
-                <h4 class="navigate">КОНТАКТЫ</h4>
+                <h4 class="navigate head">КОНТАКТЫ</h4>
             </a>
         </li>
     </ul>
