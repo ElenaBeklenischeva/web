@@ -1,9 +1,10 @@
 .comments_button {
+    display: hidden;
 	border-radius: 10px 0 10px 10px;
 	width: 340px;
 	background-color: #f0f0f0;
 	color: #989898;
-	position: absolute;
+	position: fixed;
 	height: 100%;
 	top: 0;
 	right: -325px;
@@ -17,7 +18,7 @@
 }
 
 .comments_button:after {
-	content: 'O';
+
 	font-weight: bold;
 	font-size: 15px;
 	color: white;
@@ -28,6 +29,7 @@
 
 .comments_button:hover {
 	right: 0;
+	display: block
 }
 
 #comments_form {
