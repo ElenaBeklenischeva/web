@@ -89,9 +89,9 @@ ul {
 	left: -280px;
 	bottom: 100px;
 	border-right: 20px solid #00FFBF;
-	/*padding: 10px;*/
 	transition: 0.5s;
 	font-size: 16px;
+	z-index: 1000;
 }
 
 .counter:after {
