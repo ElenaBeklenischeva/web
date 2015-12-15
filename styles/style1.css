@@ -102,6 +102,9 @@ ul {
 	right: -38px;
 	transform: rotate(-90deg);
 	-webkit-transform: rotate(-90deg);
+	filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand',
+        M11=1.5320888862379554, M12=-1.2855752193730787,
+        M21=1.2855752193730796, M22=1.5320888862379558);
 }
 
 .counter:hover {
