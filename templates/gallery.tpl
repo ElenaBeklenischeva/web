@@ -10,13 +10,7 @@
 	<script  type="text/javascript" href="js/ie.js"></script>
 	<script type="text/javascript" src='js/gallery.js'></script>
 	<script  type="text/javascript" src="js/gallery_buttons.js"></script>
-	<script>
-        window.onload = function add_resolution(){
-            var text = 'Разрешение экрана: <br>' + screen.width + '×' + screen.height;
-            var resol = document.getElementById("resolution");
-            resol.innerHTML = text;
-        };
-    </script>
+
 </head>
 <body onhelp="return false" name="body">
 	%include templates/head
@@ -54,7 +48,7 @@
 			</div>
 		</div>
 	</div>
-    %include templates/counter all=all, today=today, last_visit=last_visit, browser=browser
+    %include templates/counter text=text, browser=browser
     %include templates/comment_tpl messages=messages
 	%include templates/bottom
 	<div id='lightBox'>

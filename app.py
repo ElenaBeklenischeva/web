@@ -58,11 +58,12 @@ def get_info(db, conn_db):
 def index():
     browser, ip, messages = get_info('chat_index', conn_chat_index)
     print(ip)
+    text = "Всего посещений: " + str(get_all_visiting()) + \
+           "\nСегодня: " + str(get_today_visiting()) +\
+           "\nВаше последнее посещение:\n" + str(get_last_visit(ip))
     return template(
         'templates/index',
-        all=get_all_visiting(),
-        today=get_today_visiting(),
-        last_visit=get_last_visit(ip),
+        text=text,
         browser=browser,
         messages=messages
     )
@@ -71,11 +72,12 @@ def index():
 @app.route("/index.html")
 def index_r():
     browser, ip, messages = get_info('chat_index', conn_chat_index)
+    text = "Всего посещений: " + str(get_all_visiting()) + \
+           "\nСегодня: " + str(get_today_visiting()) +\
+           "\nВаше последнее посещение: " + str(get_last_visit(ip))
     return template(
         'templates/index',
-        all=get_all_visiting(),
-        today=get_today_visiting(),
-        last_visit=get_last_visit(ip),
+        text=text,
         browser=browser,
         messages=messages
     )
@@ -84,24 +86,27 @@ def index_r():
 @app.route("/hw.html")
 def hw():
     browser, ip, messages = get_info('chat_hw', conn_chat_hw)
+    text = "Всего посещений: " + str(get_all_visiting()) + \
+           "\nСегодня: " + str(get_today_visiting()) +\
+           "\nВаше последнее посещение:\n" + str(get_last_visit(ip))
     return template(
         'templates/hw',
         messages=messages,
-        all=get_all_visiting(),
-        today=get_today_visiting(),
-        last_visit=get_last_visit(ip),
+        text=text,
         browser=browser
     )
+
 
 
 @app.route("/galery.html")
 def gallery():
     browser, ip, messages = get_info('chat_gallery', conn_chat_gal)
+    text = "Всего посещений: " + str(get_all_visiting()) + \
+           "\nСегодня: " + str(get_today_visiting()) +\
+           "\nВаше последнее посещение:\n" + str(get_last_visit(ip))
     return template(
         'templates/gallery',
-        all=get_all_visiting(),
-        today=get_today_visiting(),
-        last_visit=get_last_visit(ip),
+        text=text,
         browser=browser,
         messages=messages
     )
@@ -110,11 +115,12 @@ def gallery():
 @app.route("/contacts.html")
 def contacts():
     browser, ip, messages = get_info('chat_contacts', conn_chat_con)
+    text = "Всего посещений: " + str(get_all_visiting()) + \
+           "\nСегодня: " + str(get_today_visiting()) +\
+           "\nВаше последнее посещение:\n" + str(get_last_visit(ip))
     return template(
         'templates/contacts',
-        all=get_all_visiting(),
-        today=get_today_visiting(),
-        last_visit=get_last_visit(ip),
+        text=text,
         browser=browser,
         messages=messages
     )
@@ -142,59 +148,59 @@ def styles(filename):
 
 @app.route("/js/<filename>")
 def get_script(filename):
-    print(filename)
+    # print(filename)
     return static_file(filename, root='./js/')
 
 
 @app.route("/hw/<filename:path>")
 def hw_files(filename):
-    print(filename)
+    # print(filename)
     return static_file(filename, root="./hw")
 
 
 @app.error(404)
 def error404(err):
-    print('error')
+    # print('error')
     return static_file("index.html", './')
 
 
 @app.post('/')
 def get_comment_ind():
-    print('It"s post index')
+    # print('It"s post index')
     add_new_message("chat_index", conn_chat_index)
     redirect("/")
 
 
 @app.post('/')
 def get_comment_ind_n():
-    print('It"s post index')
+    # print('It"s post index')
     add_new_message("chat_index", conn_chat_index)
     redirect("/index.html")
 
 
 @app.post('/hw.html')
 def get_comment_hw():
-    print('It"s post hw')
+    # print('It"s post hw')
     add_new_message("chat_hw", conn_chat_hw)
     redirect("/hw.html")
 
 
 @app.post('/galery.html')
 def get_comment_gal():
-    print('It"s post gallery')
+    # print('It"s post gallery')
     add_new_message("chat_gallery", conn_chat_gal)
     redirect("/galery.html")
 
 
 @app.post('/contacts.html')
 def get_comment_cont():
-    print('It"s post contacts')
+    # print('It"s post contacts')
     add_new_message("chat_contacts", conn_chat_con)
     redirect("/contacts.html")
 
 
 if __name__ == "__main__":
-    print('main')
+    # print('main')
     run(app=StripPathMiddleware(app),
         host='0.0.0.0',
         port=40000,

@@ -52,7 +52,7 @@
 			</li>
 		</ul>
 	</div>
-	%include templates/counter all=all, today=today, last_visit=last_visit, browser=browser
+	%include templates/counter text=text, browser=browser
 	%include templates/bottom
 	%include templates/comment_tpl messages=messages
 </body>

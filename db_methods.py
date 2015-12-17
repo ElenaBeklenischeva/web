@@ -1,7 +1,10 @@
+import base64
+from io import BytesIO
 import sqlite3
 import datetime
 import time
 import bottle
+from PIL import Image, ImageDraw, ImageFont
 
 
 def create_table(db):
@@ -53,8 +56,8 @@ def update_ip_cur(ip, conn, c):
             c.execute("update users set last_visit_time='" + str(time.time()) + "' where ip='" + ip + "'")
             c.execute("update users set visited_count_today='" + str(cur_count_1) + "' where ip='" + ip + "'")
             conn.commit()
-        else:
-            print("It's F5")
+        # else:
+        #     print("It's F5")
 
 
 def get_all_visiting_curr(conn):
@@ -97,3 +100,17 @@ def add_new_message(db, conn_db):
     ip = bottle.request.environ["REMOTE_ADDR"]
     if data.strip():
         add_message(ip, data, db, conn_db)
+
+
+def generate_img(new_text):
+    width = 250
+    height = 80
+    img = Image.new('RGB', (width, height), color=(152, 152, 152))
+    draw = ImageDraw.Draw(img)
+    font = ImageFont.truetype('arialbd.ttf', 12)
+    draw.text((25, 5), new_text, (255, 255, 255), font=font)
+
+    buffer = BytesIO()
+    img.save(buffer, format="JPEG")
+    image_result = 'data:image/jpeg;base64,' + str(base64.b64encode(buffer.getvalue()))[2:-1]
+    return image_result

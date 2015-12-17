@@ -20,6 +20,9 @@ var current_id = 'bigImg';
 
 window.onload = function ready(e) {
 	//console.log(document.cookie);
+	var text = 'Разрешение экрана: <br>' + screen.width + '×' + screen.height;
+    var resol = document.getElementById("resolution");
+    resol.innerHTML = text;
 	var curr_cookie = get_cookie('bigImg');
 	if(!curr_cookie)
 		curr_cookie = get_cookie('start');
