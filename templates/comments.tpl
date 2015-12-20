@@ -11,21 +11,20 @@
             <textarea id="comment" name="answer_form" rows="4"></textarea>
         </p>
         <p class="submit_comment">
-            <button name="submit" class="submit" onclick=clear_form()>Отправить</button>
+            <button name="submit" id='submit' class="submit" onclick='vote()'>Отправить</button>
         </p>
     </form>
 </div>
 <div id="comment_form">
     %for message in messages:
-        %#parsing.parsing_text(message[1])
-        <p><b style="font-size:15px;color:black"><i>{{message[0]}}:</i></b>&nbsp;
+        <p class="answer"><b style="font-size:15px;color:black"><i>{{message[0]}}:</i></b>&nbsp;
             %data = message[1]
             %s_b = '<b>'
             %e_b = '</b>'
             %s_i = '<i>'
             %e_i = '</i>'
             %img_s1 = '<img src="'
-            %img_e1 = '">;'
+            %img_e1 = '">'
             %img_s2 = "<img src='"
             %img_e2 = "'>"
             %start = [s_b, s_i]
@@ -35,7 +34,6 @@
             %tags = []
             %i = 0
             %j = []
-            %# data = screening(data)
             %data = parsing.clear_space(data)
             %while i < length:
             %   try:
@@ -56,10 +54,21 @@
                         %    i = close_index_1 + 13
                         %elif data[i:i + 10] == img_s2 and (
                         %                close_index_2 < open_index or open_index < 0) and close_index_2 == bracket2:
-                            {{!data[i:close_index_1 + 13]}}
+                            {{!data[i:close_index_2 + 13]}}
                         %    i = close_index_2 + 13
                         %else:
-                        %    i += 1
+                        %   close_index_1 = parsing.get_index(data[i + 11:], ">")
+                        %   if close_index_1 > -1:
+                        %       if bracket1 > -1:
+                                    {{!data[i:bracket1 + 12] + '>'}}
+                        %       elif bracket2 > -1:
+                                    {{!data[i:bracket2+12] + '>'}}
+                        %       end
+                        %       i += close_index_1 + 12
+                        %    else:
+                        %        i += 1
+                        %        #  break
+                        %    end
                         %end
                     %elif i + 4 <= length and len(stack) > 0 and i - stack[-1][1] + 4 > 0 and data[i:i + 4] in end:
                         %if stack[-1][0] == s_b:

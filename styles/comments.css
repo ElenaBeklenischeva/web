@@ -1,37 +1,36 @@
-.comments_button {
+#comment_button {
     display: hidden;
-	border-radius: 10px 0 10px 10px;
+	border-radius: 0 0 0 10px;
 	width: 340px;
 	background-color: #f0f0f0;
 	color: #989898;
 	position: fixed;
 	height: 100%;
 	top: 0;
-	right: -325px;
-	border-left: 15px solid #00FFb5;
-	/*padding: 10px;*/
-	/*transition: 0.5s;*/
+	right: -340px;
 	font-size: 16px;
 	z-index: 1000;
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
 
-.comments_button:after {
-
-	font-weight: bold;
-	font-size: 15px;
-	color: white;
-	position: absolute;
-	top: 40px;
-	left: -12px;
-}
-
-.comments_button:hover {
-	right: 0;
-	display: block
-}
 
 #comments_form {
     overflow-y: scroll;
+    max-width: 300px;
+}
+
+#comment_b {
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+    background: #00FFBF;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    z-index: 1000;
+    /*text-decoration: none;*/
+    outline: none;
+    border-radius: 7px 0 0px 7px;
 }

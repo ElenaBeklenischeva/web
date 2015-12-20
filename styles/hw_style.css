@@ -12,6 +12,9 @@
 h3 {
 	color: #6E6E6E;
 }
+#reply-title {
+    padding: 6px;
+}
 
 p {
     word-wrap: break-word;

@@ -5,7 +5,7 @@ import datetime
 import time
 import bottle
 from PIL import Image, ImageDraw, ImageFont
-
+import httpagentparser
 
 def create_table(db):
     connect = sqlite3.connect(db + ".db")
@@ -88,7 +88,12 @@ def get_last_visit_curr(ip, conn):
 
 
 def get_info_curr(db, conn_db, conn, c):
-    browser = bottle.request.environ.get('HTTP_USER_AGENT')
+    agent = bottle.request.environ.get('HTTP_USER_AGENT')
+    if agent:
+        browser = httpagentparser.detect(agent)
+        browser = browser['browser']['name'] + ' version:'+browser['browser']['version']
+    else:
+        browser = None
     ip = bottle.request.environ["REMOTE_ADDR"]
     update_ip_cur(ip, conn, c)
     messages_r = get_messages(db, conn_db)

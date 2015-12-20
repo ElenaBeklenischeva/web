@@ -27,7 +27,6 @@ window.onload = function ready(e) {
 	if(!curr_cookie)
 		curr_cookie = get_cookie('start');
 	if (curr_cookie) {
-		// console.log(curr_cookie);
 		if(Array.prototype.indexOf)
 			curr_image_position = images_src.indexOf(curr_cookie);
 		else {

@@ -72,9 +72,10 @@ def index():
 @app.route("/index.html")
 def index_r():
     browser, ip, messages = get_info('chat_index', conn_chat_index)
+    print(messages)
     text = "Всего посещений: " + str(get_all_visiting()) + \
            "\nСегодня: " + str(get_today_visiting()) +\
-           "\nВаше последнее посещение: " + str(get_last_visit(ip))
+           "\nВаше последнее посещение:\n" + str(get_last_visit(ip))
     return template(
         'templates/index',
         text=text,
