@@ -6,4 +6,4 @@
 <link rel="stylesheet" type="text/css" href="styles/comments.css">
 <script type="text/javascript" src='js/counter.js'></script>
 <script type="text/javascript" src='js/comments.js'></script>
-<script type="text/javascript" src='js/ajax.js'></script>
+<!--<script type="text/javascript" src='js/ajax.js'></script>-->
