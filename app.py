@@ -137,19 +137,18 @@ def css(filename):
     return static_file(filename, './css/')
 
 
-@app.route('/favicon.ico')
-def favicon():
-    return static_file('favicon.ico', root='./')
-
-
 @app.route("/images/<filename>")
 def styles(filename):
     return static_file(filename, './images/', mimetype='image/jpg')
 
 
+# @app.route('/favicon.ico')
+# def favicon():
+#     return static_file('favicon.ico', root='./')
+
+
 @app.route("/js/<filename>")
 def get_script(filename):
-    # print(filename)
     return static_file(filename, root='./js/')
 
 
