@@ -10,6 +10,7 @@
 	<script  type="text/javascript" href="js/ie.js"></script>
 	<script type="text/javascript" src='js/gallery.js'></script>
 	<script  type="text/javascript" src="js/gallery_buttons.js"></script>
+	<script type="text/javascript" src='js/likes.js'></script>
 
 </head>
 <body onhelp="return false" name="body">
@@ -54,10 +55,10 @@
 	<div id='lightBox'>
 		<div class="load" id="big">
 		<a href='#' id='imageCloser' onclick='return false'>X</a>
-		<img id="bigImg" class="bigImg" alt='bigImg' />
-		<p>
+        <img id="bigImg" class="bigImg" alt='bigImg' />
+       <p>
 			<button class="button_cookie" id="started" onclick="start()">Старт</button>
-			<!--<button class="button_cookie" id="background_img" onclick="back()">Фон</button>-->
+			<button class="button_cookie" id="like" onclick="return add_like()">&hearts;0</button>
 		</p>
 		</div>
 	</div>

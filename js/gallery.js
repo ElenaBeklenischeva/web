@@ -216,10 +216,6 @@ document.onkeydown = function press(e) {
 	}
 };
 
-document.onhashchange = function hash_chg(){
-	alert('что-то произошло');
-};
-
 
 function start() {
 	var curr_img = document.getElementById(current_id);

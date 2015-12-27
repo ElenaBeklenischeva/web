@@ -22,7 +22,6 @@ def create_table(db):
 
 def add_message(ip, text, db, conn_db):
     text.replace("'", "\'")
-
     conn_db.execute("INSERT INTO " + db + "(ip, date, data) VALUES(?, ?, ?)", (str(ip), str(time.time()), text))
     conn_db.commit()
 
@@ -103,8 +102,9 @@ def get_info_curr(db, conn_db, conn, c):
 def add_new_message(db, conn_db):
     data = bottle.request.forms.get('answer_form')
     ip = bottle.request.environ["REMOTE_ADDR"]
-    if data.strip():
-        add_message(ip, data, db, conn_db)
+    print('data: ' + str(data))
+    if data:
+        add_message(ip, data.strip(), db, conn_db)
 
 
 def generate_img(new_text):

@@ -2,9 +2,11 @@
 %setdefault('messages', '')
 %setdefault('addr', '#')
 
+
 <div id='feedback'>
     <h3 id="reply-title" class="reply">Оставить отзыв</h3>
-    <form action="{{addr}}" method="post" id="comment_form" class="reply-form" enctype="multipart/form-data">
+    <!--<form action="{{addr}}" method="post" id="comment_form" class="reply-form" enctype="multipart/form-data">-->
+    <form action="{{addr}}" id="comment_form" class="reply-form" enctype="multipart/form-data">
         <p>
             <label for="comment">Отзыв</label></p>
         <p>

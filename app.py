@@ -19,6 +19,13 @@ conn.execute('CREATE TABLE if not exists users'
 conn.commit()
 
 
+conn_likes = sqlite3.connect('likes.db')
+conn_likes.execute('CREATE TABLE if not exists likes'
+                   '(ip text,'
+                   'last_like int)')
+conn.commit()
+
+
 conn_chat_index = create_table("chat_index")
 conn_chat_hw = create_table("chat_hw")
 conn_chat_gal = create_table("chat_gallery")
@@ -142,9 +149,9 @@ def styles(filename):
     return static_file(filename, './images/', mimetype='image/jpg')
 
 
-# @app.route('/favicon.ico')
-# def favicon():
-#     return static_file('favicon.ico', root='./')
+@app.route('/favicon.ico')
+def favicon():
+    return static_file('f1.ico', root='./images')
 
 
 @app.route("/js/<filename>")
@@ -162,6 +169,7 @@ def hw_files(filename):
 def error404(err):
     # print('error')
     return static_file("index.html", './')
+
 
 
 @app.post('/')
@@ -194,9 +202,27 @@ def get_comment_gal():
 
 @app.post('/contacts.html')
 def get_comment_cont():
-    # print('It"s post contacts')
+    print('It"s post contacts')
     add_new_message("chat_contacts", conn_chat_con)
-    redirect("/contacts.html")
+    messages = get_messages("chat_contacts", conn_chat_con)
+    print(messages)
+    get_chat_template(messages, True)
+    # redirect("/contacts.html")
+
+
+def get_chat_template(messages, is_ajax, template_name=None, template_text=None, browser=None):
+    if is_ajax:
+        print(json.dumps(template('templates/comments'
+                           , messages=messages
+                           , addr='#')))
+        return json.dumps(json.JSONEncoder(template('templates/comments'
+                           , messages=messages
+                           , addr='#')))
+    else:
+        return template(template_name,
+                        text=template_text,
+                        browser=browser,
+                        messages=messages)
 
 
 if __name__ == "__main__":
@@ -206,3 +232,16 @@ if __name__ == "__main__":
         port=40000,
         debug=True, reloader=True)
 
+
+@app.post('/<path>/<filename>')
+def getLikeCount(path, filename):
+    ip = bottle.request.environ["REMOTE_ADDR"]
+    last_like = conn_likes.execute("select last_like from likes where ip='" + ip + "'").fetchall()
+    if last_like:
+        last_like = last_like[0]
+    else:
+        last_like = 0
+    if time.time() - last_like > 60:
+        pass
+    print('correct path')
+    print(path)
