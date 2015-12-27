@@ -6,6 +6,7 @@
     <p class="text_counter" id="resolution"></p>
     <p class="text_counter">Информация о браузере: {{browser}}</p>
     -->
+    
     %string = db_methods.generate_img(text)
     <img src={{string}}>
     <p class="text_counter" id="resolution"></p>

@@ -5,6 +5,7 @@ from bottle import route, \
 from db_methods import *
 
 
+
 app = application = Bottle()
 
 conn = sqlite3.connect('users.db')
@@ -19,11 +20,19 @@ conn.execute('CREATE TABLE if not exists users'
 conn.commit()
 
 
+conn_last_likes = sqlite3.connect('last_likes.db')
+conn_last_likes.execute('CREATE TABLE if not exists likes'
+                   '(id_img,'
+                   'ip text,'
+                   'last_like int)')
+conn_last_likes.commit()
+
+
 conn_likes = sqlite3.connect('likes.db')
 conn_likes.execute('CREATE TABLE if not exists likes'
-                   '(ip text,'
-                   'last_like int)')
-conn.commit()
+                   '(id_img,'
+                   'count int)')
+conn_likes.commit()
 
 
 conn_chat_index = create_table("chat_index")
@@ -64,7 +73,6 @@ def get_info(db, conn_db):
 @app.route("/")
 def index():
     browser, ip, messages = get_info('chat_index', conn_chat_index)
-    print(ip)
     text = "Всего посещений: " + str(get_all_visiting()) + \
            "\nСегодня: " + str(get_today_visiting()) +\
            "\nВаше последнее посещение:\n" + str(get_last_visit(ip))
@@ -79,7 +87,7 @@ def index():
 @app.route("/index.html")
 def index_r():
     browser, ip, messages = get_info('chat_index', conn_chat_index)
-    print(messages)
+    # print(messages)
     text = "Всего посещений: " + str(get_all_visiting()) + \
            "\nСегодня: " + str(get_today_visiting()) +\
            "\nВаше последнее посещение:\n" + str(get_last_visit(ip))
@@ -161,43 +169,31 @@ def get_script(filename):
 
 @app.route("/hw/<filename:path>")
 def hw_files(filename):
-    # print(filename)
     return static_file(filename, root="./hw")
 
 
 @app.error(404)
 def error404(err):
-    # print('error')
     return static_file("index.html", './')
 
 
 
-@app.post('/')
-def get_comment_ind():
-    # print('It"s post index')
-    add_new_message("chat_index", conn_chat_index)
-    redirect("/")
-
-
+@app.post('/index.html')
 @app.post('/')
 def get_comment_ind_n():
     # print('It"s post index')
     add_new_message("chat_index", conn_chat_index)
-    redirect("/index.html")
+    messages = get_messages("chat_index", conn_chat_index)
+    return get_chat_template('templates/comments', messages, True)
 
 
 @app.post('/hw.html')
 def get_comment_hw():
     # print('It"s post hw')
     add_new_message("chat_hw", conn_chat_hw)
-    redirect("/hw.html")
-
-
-@app.post('/galery.html')
-def get_comment_gal():
-    # print('It"s post gallery')
-    add_new_message("chat_gallery", conn_chat_gal)
-    redirect("/galery.html")
+    messages = get_messages('chat_hw', conn_chat_hw)
+    return get_chat_template('templates/comments', messages, True)
+    # redirect("/hw.html")
 
 
 @app.post('/contacts.html')
@@ -205,43 +201,33 @@ def get_comment_cont():
     print('It"s post contacts')
     add_new_message("chat_contacts", conn_chat_con)
     messages = get_messages("chat_contacts", conn_chat_con)
-    print(messages)
-    get_chat_template(messages, True)
-    # redirect("/contacts.html")
+    return get_chat_template('templates/comments', messages, True)
 
 
-def get_chat_template(messages, is_ajax, template_name=None, template_text=None, browser=None):
-    if is_ajax:
-        print(json.dumps(template('templates/comments'
-                           , messages=messages
-                           , addr='#')))
-        return json.dumps(json.JSONEncoder(template('templates/comments'
-                           , messages=messages
-                           , addr='#')))
-    else:
-        return template(template_name,
-                        text=template_text,
-                        browser=browser,
-                        messages=messages)
+@app.post('/galery.html')
+def get_comment_cont():
+    # print('It"s post galery')
+    add_new_message("chat_gallery", conn_chat_gal)
+    messages = get_messages("chat_gallery", conn_chat_gal)
+    return get_chat_template('templates/comments', messages, True)
 
 
 if __name__ == "__main__":
-    # print('main')
     run(app=StripPathMiddleware(app),
         host='0.0.0.0',
         port=40000,
         debug=True, reloader=True)
 
 
-@app.post('/<path>/<filename>')
-def getLikeCount(path, filename):
+@app.post('/<path>/<img_name>')
+def getLikeCount(path, img_name):
     ip = bottle.request.environ["REMOTE_ADDR"]
-    last_like = conn_likes.execute("select last_like from likes where ip='" + ip + "'").fetchall()
+    last_like = conn_last_likes.execute("select last_like from last_likes where id_img='" + img_name + "'").fetchall()
     if last_like:
-        last_like = last_like[0]
+        if time.time() - last_like > 60:
+            count_likes = conn_likes.execute("select count from likes ")
+            conn_likes.execute('update ')
     else:
-        last_like = 0
-    if time.time() - last_like > 60:
-        pass
+        last_like = -100
     print('correct path')
     print(path)
