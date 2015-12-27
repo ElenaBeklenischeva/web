@@ -1,6 +1,7 @@
 %import parsing
 %setdefault('messages', '')
 
+
 <div id="answers_form">
     %for message in messages:
         <p class="answer">

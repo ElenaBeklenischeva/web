@@ -1,6 +1,7 @@
 #padding {
 	padding-left: 25pt;
 }
+
 #header {
 	/*margin: 7% auto;*/
 	margin-left: 40%;
@@ -8,7 +9,6 @@
 	font-size: 20px;
 	line-height: 0.5;
 }
-
 
 .col{
     border: 1px solid #D8D8D8;

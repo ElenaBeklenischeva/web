@@ -10,7 +10,6 @@ import httpagentparser
 
 def create_table(db):
     connect = sqlite3.connect(db + ".db")
-
     connect.execute('CREATE TABLE if not exists ' + db + '('
                                                          'id integer primary key autoincrement,'
                                                          'ip text,'

@@ -13,8 +13,8 @@
 	<script type="text/javascript" src='js/gallery.js'></script>
 	<script  type="text/javascript" src="js/gallery_buttons.js"></script>
 	<script type="text/javascript" src='js/likes.js'></script>
-
 </head>
+
 <body onhelp="return false" name="body">
 	%include templates/head
 	<div class='col-xs-offset-1 col-xs-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 background'>
