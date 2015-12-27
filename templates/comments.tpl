@@ -16,6 +16,7 @@
             %img_s2 = "<img src='"
             %img_e2 = "'>"
             %start = [s_b, s_i]
+            %end = [e_b, e_i]
             %length = len(data)
             %stack = []
             %tags = []
