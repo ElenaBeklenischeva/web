@@ -16,7 +16,7 @@
         <li class="col-xs-12
                    col-md-3 list head">
             <a href='hw.html'>
-                <h4 class="navigate head">ОТЗЫВЫ</h4>
+                <h4 class="navigate head">ПРАКТИКА</h4>
             </a>
         </li>
         <li class="col-xs-12

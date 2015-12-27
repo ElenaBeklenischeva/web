@@ -7,6 +7,7 @@ import bottle
 from PIL import Image, ImageDraw, ImageFont
 import httpagentparser
 
+
 def create_table(db):
     connect = sqlite3.connect(db + ".db")
 
@@ -103,8 +104,23 @@ def get_info_curr(db, conn_db, conn, c):
 def add_new_message(db, conn_db):
     data = bottle.request.forms.get('answer_form')
     ip = bottle.request.environ["REMOTE_ADDR"]
-    if data.strip():
-        add_message(ip, data, db, conn_db)
+    print('data: ' + str(data))
+    if data:
+        add_message(ip, data.strip(), db, conn_db)
+
+
+def get_chat_template(address, messages, is_ajax, template_name=None, template_text=None, browser=None):
+    if is_ajax:
+        # response.content_type = 'application/json'
+        bottle.response.content_type = 'text/html; charset=utf-8'
+        return bottle.template(address
+                               , messages=messages
+                               , addr='#')
+    else:
+        return bottle.template(template_name,
+                        text=template_text,
+                        browser=browser,
+                        messages=messages)
 
 
 def generate_img(new_text):

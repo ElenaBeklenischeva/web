@@ -1,23 +1,10 @@
 %import parsing
 %setdefault('messages', '')
-%setdefault('addr', '#')
 
-<div id='feedback'>
-    <h3 id="reply-title" class="reply">Оставить отзыв</h3>
-    <form action="{{addr}}" method="post" id="comment_form" class="reply-form" enctype="multipart/form-data">
-        <p>
-            <label for="comment">Отзыв</label></p>
-        <p>
-            <textarea id="comment" name="answer_form" rows="4"></textarea>
-        </p>
-        <p class="submit_comment">
-            <button name="submit" id='submit' class="submit" onclick='vote()'>Отправить</button>
-        </p>
-    </form>
-</div>
-<div id="comment_form">
+<div id="answers_form">
     %for message in messages:
-        <p class="answer"><b style="font-size:15px;color:black"><i>{{message[0]}}:</i></b>&nbsp;
+        <p class="answer">
+        <b style="font-size:15px;color:black"><i>{{message[0]}}:</i></b><br>
             %data = message[1]
             %s_b = '<b>'
             %e_b = '</b>'
@@ -28,7 +15,6 @@
             %img_s2 = "<img src='"
             %img_e2 = "'>"
             %start = [s_b, s_i]
-            %end = [e_b, e_i]
             %length = len(data)
             %stack = []
             %tags = []
