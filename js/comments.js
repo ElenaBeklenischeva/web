@@ -2,7 +2,6 @@ function upper(){
     var button = document.getElementById('comment_b');
     var div = document.getElementById("comment_button");
     var attrDiv = button.getAttribute('value');
-    
     if (attrDiv == '0') {
         div.setAttribute('style', 'display:block');
         div.setAttribute('style', 'right:0');

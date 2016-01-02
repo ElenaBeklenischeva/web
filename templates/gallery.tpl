@@ -13,8 +13,8 @@
 	<script type="text/javascript" src='js/gallery.js'></script>
 	<script  type="text/javascript" src="js/gallery_buttons.js"></script>
 	<script type="text/javascript" src='js/likes.js'></script>
-</head>
 
+</head>
 <body onhelp="return false" name="body">
 	%include templates/head
 	<div class='col-xs-offset-1 col-xs-10 col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6 background'>
@@ -60,7 +60,7 @@
         <img id="bigImg" class="bigImg" alt='bigImg' />
        <p>
 			<button class="button_cookie" id="started" onclick="start()">Старт</button>
-			<button class="button_cookie" id="like" onclick="return add_like()">&hearts;0</button>
+			<button class="button_cookie" id="like" onclick="return add_like()"></button>
 		</p>
 		</div>
 	</div>

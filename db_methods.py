@@ -10,6 +10,7 @@ import httpagentparser
 
 def create_table(db):
     connect = sqlite3.connect(db + ".db")
+
     connect.execute('CREATE TABLE if not exists ' + db + '('
                                                          'id integer primary key autoincrement,'
                                                          'ip text,'
@@ -22,6 +23,7 @@ def create_table(db):
 
 def add_message(ip, text, db, conn_db):
     text.replace("'", "\'")
+
     conn_db.execute("INSERT INTO " + db + "(ip, date, data) VALUES(?, ?, ?)", (str(ip), str(time.time()), text))
     conn_db.commit()
 
